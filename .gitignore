@@ -1,0 +1,4 @@
+.vscode/launch.json
+
+# Node artifact files
+node_modules/
