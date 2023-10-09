@@ -41,7 +41,8 @@ app.get("/:Name", (req, res) => {
     
   let filter = {}
   if(typeof req.params["Name"] !== 'undefined'){
-    filter["Name"] = req.params["Name"]
+    if(req.params["Name"]!='*')
+      filter["Name"] = req.params["Name"]
   }
 
   systemPrompt.find(filter)
