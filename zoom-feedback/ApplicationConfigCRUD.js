@@ -72,7 +72,8 @@ app.get("/:AppName", (req, res) => {
     
   let filter = {}
   if(typeof req.params["AppName"] !== 'undefined'){
-    filter["AppName"] = req.params["AppName"]
+    if(req.params["AppName"]!='*')
+      filter["AppName"] = req.params["AppName"]
   }
 
   applicationConfig.find(filter)

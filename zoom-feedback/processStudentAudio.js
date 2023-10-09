@@ -86,7 +86,13 @@ app.post("/", async (request, response) => {
             else{
                 console.info((new Date()).toString()+"|"+prependToLog,"Prepare S3 Bucket Request")
                 // Create an Amazon S3 client object.
-                const s3Client = new s3.S3Client({ region: record["awsRegion"] });
+                const s3Client = new s3.S3Client({ 
+                    region: record["awsRegion"],
+                    credentials:{
+                        accessKeyId:process.env.FP_AWS_ACCESS_KEY_ID,
+                        secretAccessKey:process.env.FP_AWS_SECRET_ACCESS_KEY
+                    } 
+                });
                 
                 //Create transcription param object
                 const params = {
