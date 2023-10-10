@@ -8,7 +8,7 @@ const students = require("./models/students.js")
 const sendResponseToGlific = require("../glific/sendResponseToGlific.js")
 
 
-app.put("/interaction/:glificID", async (request, response) => {
+app.patch("/interaction/:glificID", async (request, response) => {
     let startTimeStamp = new Date()
     const executionID = Math.random().toString(36).slice(2)
 
