@@ -115,7 +115,7 @@ app.post("/", async (request, response) => {
                     return await s3Client.send(new s3.GetObjectCommand(params));
                 }, retryOptions);
 
-                fileFullName = fileFullName.startsWith("participants/") ? fileFullName.replace("participants/"):fileFullName
+                fileFullName = fileFullName.startsWith("participants/") ? fileFullName.replace("participants/",""):fileFullName
                 // Extract the body contents a temp file
                 console.info((new Date()).toString()+"|"+prependToLog,"Store S3 Object to temp file: ./tmp/"+fileFullName)
 
@@ -143,7 +143,7 @@ app.post("/", async (request, response) => {
                     
                     //Create a record for new students and Store students's Glific ID
                     studentsAllRecords = await students.create({
-                        FPID:fileNameTokens[0],//<students FPID>
+                        FPID:fileNameTokens[0].startsWith("participants/") ? fileNameTokens[0].replace("participants/",""):fileNameTokens[0],//<students FPID>
                         Mobile:fileNameTokens[1],//<students mobile>
                         Name:fileNameTokens[2],//<students name>
                         Consent:true,
