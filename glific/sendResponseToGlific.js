@@ -22,14 +22,14 @@ module.exports = (flowID,contactID,resultJSON,resultVariable,responseObject,star
             responseJSON["ErrorDescription"] = "resultVariable missing";
             console.info((new Date()).toString()+"|"+prependToLog,"Returned: ", responseJSON);
             reject(JSON.stringify(responseJSON));
-        } else if (typeof flowID === "undefined") {
+        /*} else if (typeof flowID === "undefined") {
             responseJSON["ErrorDescription"] = "flowID missing";
             console.info((new Date()).toString()+"|"+prependToLog,"Returned: ", responseJSON);
             reject(JSON.stringify(responseJSON));
         } else if (typeof contactID === "undefined") {
             responseJSON["ErrorDescription"] = "contactID missing";
             console.info((new Date()).toString()+"|"+prependToLog,"Returned: ", responseJSON);
-            reject(JSON.stringify(responseJSON));
+            reject(JSON.stringify(responseJSON));*/
         } else if (typeof resultJSON === "undefined") {
             responseJSON["ErrorDescription"] = "resultJSON missing";
             console.info((new Date()).toString()+"|"+prependToLog,"Returned: ", responseJSON);
@@ -40,7 +40,7 @@ module.exports = (flowID,contactID,resultJSON,resultVariable,responseObject,star
             //Send Reponse to Glific
             let endTimeStamp = new Date();
             let executionDuration = (endTimeStamp - startTimeStamp) / 1000;
-            if (executionDuration > 5) {
+            if ((executionDuration > 5)&&(typeof contactID !== "undefined")&&(typeof flowID !== "undefined")) {
                 let resultJSONObject = {}
                 resultJSONObject[resultVariable] = resultJSON
                 
@@ -157,8 +157,15 @@ module.exports = (flowID,contactID,resultJSON,resultVariable,responseObject,star
                     }
                 });
             }
-            else
+            else{
+                if(executionDuration > 5){
+                    if(typeof contactID === "undefined")
+                        console.info((new Date()).toString()+"|"+prependToLog,"contactID is missing");
+                    if(typeof flowID === "undefined")
+                        console.info((new Date()).toString()+"|"+prependToLog,"flowID is missing");
+                }
                 resolve(JSON.stringify(responseJSON))
+            }
         }
     })
 };
